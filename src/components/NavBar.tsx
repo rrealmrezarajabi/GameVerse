@@ -15,8 +15,8 @@ const NavBar = () => {
             to="/"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-400 font-semibold"
-                : "text-gray-300 hover:text-white transition"
+                ? "text-pink-400 font-semibold"
+                : "text-gray-300 hover:text-pink-400 transition"
             }
           >
             Home
@@ -26,8 +26,8 @@ const NavBar = () => {
             to="/about"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-400 font-semibold"
-                : "text-gray-300 hover:text-white transition"
+                ? "text-pink-400 font-semibold"
+                : "text-gray-300 hover:text-pink-400 transition"
             }
           >
             About Me
@@ -37,15 +37,15 @@ const NavBar = () => {
             to="/contact"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-400 font-semibold"
-                : "text-gray-300 hover:text-white transition"
+                ? "text-pink-400 font-semibold"
+                : "text-gray-300 hover:text-pink-400 transition"
             }
           >
             Contact Me
           </NavLink>
         </div>
 
-        <button className="rounded-xl bg-blue-500 px-5 py-2 text-lg font-medium hover:bg-blue-600 transition">
+        <button className=" cursor-pointer rounded-xl bg-pink-400 px-5 py-2 text-lg font-medium hover:bg-pink-600 transition">
           BookMark
         </button>
       </div>

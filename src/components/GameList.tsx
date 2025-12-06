@@ -3,19 +3,26 @@ import { useGenre } from "../context/GenreContext";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GameSort from "./GameSort";
+
 const GameList = () => {
   const { selectedGenre } = useGenre();
   const [page, setPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   const {
     data: games,
     isLoading,
     error,
-  } = useGames(selectedGenre?.id, page, sortOrder);
+  } = useGames(selectedGenre?.id, page, sortOrder, );
   useEffect(() => {
     setPage(1);
   }, [selectedGenre]);
+
+
+  let temp = games?.filter((game)=>{
+    return game.name.toLowerCase().includes(searchText.toLowerCase())
+  })
 
   if (isLoading)
     return <p className="text-sm text-zinc-400">Loading games...</p>;
@@ -25,12 +32,26 @@ const GameList = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-center mt-4">
+      <div className="flex justify-center items-center gap-4 mt-4">
+        <input
+          type="text"
+          placeholder="Search games..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          className="
+        w-full max-w-sm
+        rounded-lg bg-zinc-900 border border-zinc-700
+        px-4 py-2 text-sm text-white
+        placeholder:text-zinc-500
+        focus:outline-none focus:ring-1 focus:ring-pink-400
+      "
+        />
+
         <GameSort value={sortOrder} onChange={(value) => setSortOrder(value)} />
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
-        {games?.map((game) => (
+        {temp?.map((game) => (
           <Link key={game.id} to={`/games/${game.id}`} className="block">
             <div
               className="overflow-hidden rounded-xl bg-zinc-900

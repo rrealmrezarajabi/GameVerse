@@ -8,7 +8,8 @@ interface GamesResponse {
 export const getGames = async (
   genreId?: number,
   page: number = 1,
-  sortOrder?: string
+  sortOrder?: string,
+  searchText?: string
 ): Promise<Game[]> => {
   const res = await api.get<GamesResponse>("/games", {
     params: {
@@ -16,6 +17,7 @@ export const getGames = async (
       page,
       page_size: 12,
       ordering: sortOrder || undefined,
+      search: searchText || undefined,
     },
   });
 

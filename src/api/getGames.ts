@@ -5,12 +5,17 @@ interface GamesResponse {
   results: Game[];
 }
 
-export const getGames = async (genreId?: number , page:number = 1): Promise<Game[]> => {
+export const getGames = async (
+  genreId?: number,
+  page: number = 1,
+  sortOrder?: string
+): Promise<Game[]> => {
   const res = await api.get<GamesResponse>("/games", {
     params: {
-      genres: genreId, 
+      genres: genreId,
       page,
-      page_size:12
+      page_size: 12,
+      ordering: sortOrder || undefined,
     },
   });
 

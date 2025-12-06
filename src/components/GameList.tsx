@@ -2,10 +2,17 @@ import { useGames } from "../hooks/useGames";
 import { useGenre } from "../context/GenreContext";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import GameSort from "./GameSort";
 const GameList = () => {
   const { selectedGenre } = useGenre();
   const [page, setPage] = useState(1);
-  const { data: games, isLoading, error } = useGames(selectedGenre?.id, page);
+  const [sortOrder, setSortOrder] = useState("");
+
+  const {
+    data: games,
+    isLoading,
+    error,
+  } = useGames(selectedGenre?.id, page, sortOrder);
   useEffect(() => {
     setPage(1);
   }, [selectedGenre]);
@@ -18,6 +25,10 @@ const GameList = () => {
 
   return (
     <div>
+      <div className="flex items-center justify-center mt-4">
+        <GameSort value={sortOrder} onChange={(value) => setSortOrder(value)} />
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
         {games?.map((game) => (
           <Link key={game.id} to={`/games/${game.id}`} className="block">

@@ -1,10 +1,10 @@
-import GameList from "../components/GameList"
+import GameList from "../components/GameList";
 const Home = () => {
   return (
     <div>
-      <GameList/>
+      <GameList />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

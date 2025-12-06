@@ -5,10 +5,12 @@ interface GamesResponse {
   results: Game[];
 }
 
-export const getGames = async (genreId?: number): Promise<Game[]> => {
+export const getGames = async (genreId?: number , page:number = 1): Promise<Game[]> => {
   const res = await api.get<GamesResponse>("/games", {
     params: {
       genres: genreId, 
+      page,
+      page_size:12
     },
   });
 

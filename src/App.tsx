@@ -1,8 +1,15 @@
-import NavBar from "./components/NavBar"
+import { Route , Routes } from "react-router-dom"
+import HomeLayout from "./layout/HomeLayout"
+import Home from "./pages/Home"
 const App = () => {
   return (
-    <NavBar />
-   
+    
+   <Routes>
+    <Route path="/" element={<HomeLayout/>}>
+      <Route index element={<Home/>}/>
+    </Route>
+
+   </Routes>
   )
 }
 

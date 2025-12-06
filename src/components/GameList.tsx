@@ -55,13 +55,13 @@ const GameList = () => {
           <Link key={game.id} to={`/games/${game.id}`} className="block">
             <div
               className="overflow-hidden rounded-xl bg-zinc-900
-                 hover:scale-[1.02] transition-transform cursor-pointer"
+                 hover:scale-[1.02] transition-transform cursor-pointer aspect-16/11"
             >
               {game.background_image && (
                 <img
                   src={game.background_image}
                   alt={game.name}
-                  className="h-40 w-full object-cover"
+                  className="h-50 w-full object-cover"
                 />
               )}
 

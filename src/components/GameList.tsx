@@ -1,6 +1,7 @@
 import { useGames } from "../hooks/useGames";
 import { useGenre } from "../context/GenreContext";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 const GameList = () => {
   const { selectedGenre } = useGenre();
   const [page, setPage] = useState(1);
@@ -19,37 +20,42 @@ const GameList = () => {
     <div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
         {games?.map((game) => (
-          <div
-            key={game.id}
-            className="overflow-hidden rounded-xl bg-zinc-900 hover:scale-[1.02] transition-transform"
-          >
-            {game.background_image && (
-              <img
-                src={game.background_image}
-                alt={game.name}
-                className="h-40 w-full object-cover"
-              />
-            )}
+          <Link key={game.id} to={`/games/${game.id}`} className="block">
+            <div
+              className="overflow-hidden rounded-xl bg-zinc-900
+                 hover:scale-[1.02] transition-transform cursor-pointer"
+            >
+              {game.background_image && (
+                <img
+                  src={game.background_image}
+                  alt={game.name}
+                  className="h-40 w-full object-cover"
+                />
+              )}
 
-            <div className="p-4">
-              <h3 className="text-white text-lg font-semibold">{game.name}</h3>
-              <div className="flex gap-1 mb-2">
-                <p className="text-sm text-zinc-400 mb-2">Rating : </p>
-                <span className="text-pink-400"> {game.rating ?? "N/A"}</span>
-              </div>
+              <div className="p-4">
+                <h3 className="text-white text-lg font-semibold">
+                  {game.name}
+                </h3>
 
-              <div className="flex flex-wrap gap-2">
-                {game.platforms?.map(({ platform }) => (
-                  <span
-                    key={platform.id}
-                    className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
-                  >
-                    {platform.name}
-                  </span>
-                ))}
+                <div className="flex gap-1 mb-2">
+                  <p className="text-sm text-zinc-400">Rating :</p>
+                  <span className="text-pink-400">{game.rating ?? "N/A"}</span>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {game.platforms?.map(({ platform }) => (
+                    <span
+                      key={platform.id}
+                      className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
+                    >
+                      {platform.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div className="mb-4 text-white flex items-center justify-center gap-4">

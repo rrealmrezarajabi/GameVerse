@@ -11,6 +11,7 @@ export interface Game {
   background_image: string;
   rating: number;
   platforms: GamePlatform[];
+  released: string;
 }
 
 export interface GameDetail {

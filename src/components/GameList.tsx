@@ -62,12 +62,15 @@ const GameList = () => {
               )}
 
               <div className="p-4">
-                <h3 className="text-white text-lg font-semibold">
+                <h3 className="text-white text-lg font-semibold mb-1">
                   {game.name}
                 </h3>
-
+                <div className="flex gap-1 mb-1">
+                  <p className=" font-bold text-sm text-zinc-400">Released :</p>
+                  <span className="text-pink-400">{game.released}</span>
+                </div>
                 <div className="flex gap-1 mb-2">
-                  <p className="text-sm text-zinc-400">Rating :</p>
+                  <p className="font-bold text-sm text-zinc-400">Rating :</p>
                   <span className="text-pink-400">{game.rating ?? "N/A"}</span>
                 </div>
 

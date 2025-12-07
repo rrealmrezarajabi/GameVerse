@@ -23,11 +23,10 @@ const GameList = () => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchText);
       setPage(1);
-    }, 1000); 
+    }, 1000);
 
     return () => clearTimeout(handler);
   }, [searchText]);
-
 
   if (error)
     return <p className="text-sm text-red-400">Failed to load games</p>;

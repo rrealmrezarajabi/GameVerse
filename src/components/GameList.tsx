@@ -3,29 +3,31 @@ import { useGenre } from "../context/GenreContext";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GameSort from "./GameSort";
-
+import GameSearch from "./GameSearch";
 const GameList = () => {
   const { selectedGenre } = useGenre();
   const [page, setPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("");
   const [searchText, setSearchText] = useState("");
-
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const {
     data: games,
     isLoading,
     error,
-  } = useGames(selectedGenre?.id, page, sortOrder, );
+  } = useGames(selectedGenre?.id, page, sortOrder, debouncedSearch);
   useEffect(() => {
     setPage(1);
   }, [selectedGenre]);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchText);
+      setPage(1);
+    }, 1000); 
 
-  let temp = games?.filter((game)=>{
-    return game.name.toLowerCase().includes(searchText.toLowerCase())
-  })
+    return () => clearTimeout(handler);
+  }, [searchText]);
 
-  if (isLoading)
-    return <p className="text-sm text-zinc-400">Loading games...</p>;
 
   if (error)
     return <p className="text-sm text-red-400">Failed to load games</p>;
@@ -33,25 +35,20 @@ const GameList = () => {
   return (
     <div>
       <div className="flex justify-center items-center gap-4 mt-4">
-        <input
-          type="text"
-          placeholder="Search games..."
+        <GameSearch
           value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          className="
-        w-full max-w-sm
-        rounded-lg bg-zinc-900 border border-zinc-700
-        px-4 py-2 text-sm text-white
-        placeholder:text-zinc-500
-        focus:outline-none focus:ring-1 focus:ring-pink-400
-      "
+          onChange={(value) => setSearchText(value)}
         />
-
         <GameSort value={sortOrder} onChange={(value) => setSortOrder(value)} />
       </div>
+      {isLoading && (
+        <p className="text-center text-sm text-zinc-500 animate-pulse">
+          Loading games...
+        </p>
+      )}
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
-        {temp?.map((game) => (
+        {games?.map((game) => (
           <Link key={game.id} to={`/games/${game.id}`} className="block">
             <div
               className="overflow-hidden rounded-xl bg-zinc-900

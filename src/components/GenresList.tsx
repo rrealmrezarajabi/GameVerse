@@ -11,7 +11,7 @@ const GenresList = () => {
   if (error) return <p className="text-xs text-red-400">Failed to load</p>;
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 ">
       {genres?.map((genre) => {
         const isActive = selectedGenre?.id === genre.id;
 

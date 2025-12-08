@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import MainLayout from "./layout/MainLayout";
 import GameDetail from "./pages/GameDetail";
 import About from "./pages/About";
+import ContactForm from "./pages/Contact";
 const App = () => {
   return (
     <Routes>
@@ -13,6 +14,7 @@ const App = () => {
       <Route element={<MainLayout />}>
         <Route path="/games/:id" element={<GameDetail />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactForm />} />
       </Route>
     </Routes>
   );

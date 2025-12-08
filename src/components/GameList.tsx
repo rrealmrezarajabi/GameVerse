@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GameSort from "./GameSort";
 import GameSearch from "./GameSearch";
+import GameCardSkeleton from "./GameCardSkeleton";
 const GameList = () => {
   const { selectedGenre } = useGenre();
   const [page, setPage] = useState(1);
@@ -40,54 +41,58 @@ const GameList = () => {
         />
         <GameSort value={sortOrder} onChange={(value) => setSortOrder(value)} />
       </div>
-      {isLoading && (
-        <p className="text-center text-sm text-zinc-500 animate-pulse">
-          Loading games...
-        </p>
-      )}
-
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
-        {games?.map((game) => (
-          <Link key={game.id} to={`/games/${game.id}`} className="block">
-            <div
-              className="overflow-hidden rounded-xl bg-zinc-900
+        {isLoading
+          ? Array.from({ length: 9 }).map((_, index) => (
+              <GameCardSkeleton key={index} />
+            ))
+          : games?.map((game) => (
+              <Link key={game.id} to={`/games/${game.id}`} className="block">
+                <div
+                  className="overflow-hidden rounded-xl bg-zinc-900
                  hover:scale-[1.02] transition-transform cursor-pointer aspect-16/11"
-            >
-              {game.background_image && (
-                <img
-                  src={game.background_image}
-                  alt={game.name}
-                  className="h-50 w-full object-cover"
-                />
-              )}
+                >
+                  {game.background_image && (
+                    <img
+                      src={game.background_image}
+                      alt={game.name}
+                      className="h-50 w-full object-cover"
+                    />
+                  )}
 
-              <div className="p-4">
-                <h3 className="text-white text-lg font-semibold mb-1">
-                  {game.name}
-                </h3>
-                <div className="flex gap-1 mb-1">
-                  <p className=" font-bold text-sm text-zinc-400">Released :</p>
-                  <span className="text-pink-400">{game.released}</span>
-                </div>
-                <div className="flex gap-1 mb-2">
-                  <p className="font-bold text-sm text-zinc-400">Rating :</p>
-                  <span className="text-pink-400">{game.rating ?? "N/A"}</span>
-                </div>
+                  <div className="p-4">
+                    <h3 className="text-white text-lg font-semibold mb-1">
+                      {game.name}
+                    </h3>
+                    <div className="flex gap-1 mb-1">
+                      <p className=" font-bold text-sm text-zinc-400">
+                        Released :
+                      </p>
+                      <span className="text-pink-400">{game.released}</span>
+                    </div>
+                    <div className="flex gap-1 mb-2">
+                      <p className="font-bold text-sm text-zinc-400">
+                        Rating :
+                      </p>
+                      <span className="text-pink-400">
+                        {game.rating ?? "N/A"}
+                      </span>
+                    </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {game.platforms?.map(({ platform }) => (
-                    <span
-                      key={platform.id}
-                      className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
-                    >
-                      {platform.name}
-                    </span>
-                  ))}
+                    <div className="flex flex-wrap gap-2">
+                      {game.platforms?.map(({ platform }) => (
+                        <span
+                          key={platform.id}
+                          className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
+                        >
+                          {platform.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </Link>
-        ))}
+              </Link>
+            ))}
       </div>
       <div className="mb-4 text-white flex items-center justify-center gap-4">
         <button

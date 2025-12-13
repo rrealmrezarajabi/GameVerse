@@ -12,3 +12,5 @@ const GenreSkeleton = () => {
 
 export default GenreSkeleton;
 
+
+

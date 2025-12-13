@@ -11,16 +11,20 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="w-full h-24 bg-gray-900 text-white shadow-md">
-        <div className="flex h-full items-center justify-between px-4">
-          {/* Logo */}
+      <nav className="w-full h-auto sm:h-24 bg-gray-900 text-white shadow-md">
+        <div className="flex flex-col sm:flex-row h-full items-center justify-between px-4 py-3 sm:py-0 gap-3 sm:gap-0">
           <NavLink to="/" className="flex items-center">
-            <img src={logo} alt="logo" className="h-20 w-20 object-contain" />
-            <span className="text-3xl font-bold tracking-wide">GameVerse</span>
+            <img
+              src={logo}
+              alt="logo"
+              className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
+            />
+            <span className="text-xl sm:text-2xl md:text-3xl font-bold tracking-wide">
+              GameVerse
+            </span>
           </NavLink>
 
-          {/* Links */}
-          <div className="flex gap-10 text-lg">
+          <div className="flex gap-4 sm:gap-6 md:gap-10 text-sm sm:text-base md:text-lg">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -55,20 +59,20 @@ const NavBar = () => {
             </NavLink>
           </div>
 
-          {/* Bookmark Button */}
           <button
             onClick={() => setOpen(true)}
             className="relative flex items-center gap-2
             cursor-pointer rounded-xl bg-pink-400
-            px-5 py-2 text-lg font-medium
-            hover:bg-pink-600 transition"
+            px-3 sm:px-5 py-2 text-sm sm:text-base md:text-lg font-medium
+            hover:bg-pink-600 transition w-full sm:w-auto justify-center"
           >
             <FaRegBookmark />
-            <span>Bookmarks</span>
+            <span className="hidden sm:inline">Bookmarks</span>
+            <span className="sm:hidden">Bookmarks ({items.length})</span>
 
             {items.length > 0 && (
               <span
-                className="absolute -top-2 -right-2
+                className="absolute -top-2 -right-2 hidden sm:block
                 rounded-full bg-black px-2 py-0.5
                 text-xs text-white"
               >
@@ -79,7 +83,6 @@ const NavBar = () => {
         </div>
       </nav>
 
-      {/* Bookmark Modal */}
       <BookmarkModal open={open} onClose={() => setOpen(false)} />
     </>
   );

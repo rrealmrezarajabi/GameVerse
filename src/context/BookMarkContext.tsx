@@ -31,17 +31,14 @@ export const BookMarkContext = createContext<BookMarkContextType | undefined>(
 );
 
 export const BookMarkProvider = ({ children }: Props) => {
-  // ✅ load once from localStorage
   const [items, setItems] = useState<BookMarkItem[]>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       const parsed = JSON.parse(raw);
 
-      // basic validation: must be array
       if (!Array.isArray(parsed)) return [];
 
-      // optionally filter invalid entries
       return parsed.filter(
         (x: any) =>
           typeof x?.id === "number" &&
@@ -53,13 +50,10 @@ export const BookMarkProvider = ({ children }: Props) => {
     }
   });
 
-  // ✅ save whenever items changes
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch {
-      // ignore storage errors (private mode, quota, etc.)
-    }
+    } catch {}
   }, [items]);
 
   const addToBookMark = (game: BookMarkItem) => {

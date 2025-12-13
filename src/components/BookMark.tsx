@@ -11,7 +11,6 @@ type Props = {
 const BookmarkModal = ({ open, onClose }: Props) => {
   const { items, removeFromBookMark } = useBookMark();
 
-  
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
@@ -25,20 +24,17 @@ const BookmarkModal = ({ open, onClose }: Props) => {
 
   return (
     <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
       <button
         className="absolute inset-0 bg-black/70"
         onClick={onClose}
         aria-label="Close modal"
       />
 
-      {/* Modal */}
       <div
-        className="absolute left-1/2 top-1/2 w-[92%] max-w-2xl
+        className="absolute left-1/2 top-1/2 w-[92%] sm:w-[90%] max-w-2xl
         -translate-x-1/2 -translate-y-1/2
-        rounded-2xl bg-zinc-950 border border-zinc-800 shadow-xl"
+        rounded-xl sm:rounded-2xl bg-zinc-950 border border-zinc-800 shadow-xl max-h-[90vh] flex flex-col"
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-zinc-800">
           <h2 className="text-white text-lg font-semibold">
             Bookmarks ({items.length})
@@ -53,8 +49,7 @@ const BookmarkModal = ({ open, onClose }: Props) => {
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-4 max-h-[70vh] overflow-y-auto">
+        <div className="p-3 sm:p-4 flex-1 overflow-y-auto">
           {items.length === 0 ? (
             <p className="text-zinc-400 text-sm">No bookmarked games yet.</p>
           ) : (
@@ -65,7 +60,6 @@ const BookmarkModal = ({ open, onClose }: Props) => {
                   className="flex items-center gap-3 rounded-xl
                   border border-zinc-800 bg-zinc-900/50 p-3"
                 >
-                  {/* Image */}
                   <div className="h-14 w-20 rounded-lg overflow-hidden bg-zinc-800 shrink-0">
                     {game.background_image && (
                       <img
@@ -76,7 +70,6 @@ const BookmarkModal = ({ open, onClose }: Props) => {
                     )}
                   </div>
 
-                  {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p className="text-white font-semibold truncate">
                       {game.name}
@@ -90,7 +83,6 @@ const BookmarkModal = ({ open, onClose }: Props) => {
                     </Link>
                   </div>
 
-                  {/* Remove */}
                   <button
                     onClick={() => removeFromBookMark(game.id)}
                     className="p-2 rounded-lg text-zinc-300 hover:bg-zinc-800 hover:text-white"
@@ -104,7 +96,6 @@ const BookmarkModal = ({ open, onClose }: Props) => {
           )}
         </div>
 
-        {/* Footer */}
         <div className="p-4 border-t border-zinc-800 flex justify-end">
           <button
             onClick={onClose}

@@ -1,4 +1,10 @@
-import { createContext,useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 export interface BookMarkItem {
   id: number;
@@ -18,12 +24,43 @@ interface Props {
   children: ReactNode;
 }
 
+const STORAGE_KEY = "gameverse_bookmarks_v1";
+
 export const BookMarkContext = createContext<BookMarkContextType | undefined>(
   undefined
 );
 
 export const BookMarkProvider = ({ children }: Props) => {
-  const [items, setItems] = useState<BookMarkItem[]>([]);
+  // ✅ load once from localStorage
+  const [items, setItems] = useState<BookMarkItem[]>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+
+      // basic validation: must be array
+      if (!Array.isArray(parsed)) return [];
+
+      // optionally filter invalid entries
+      return parsed.filter(
+        (x: any) =>
+          typeof x?.id === "number" &&
+          typeof x?.name === "string" &&
+          typeof x?.background_image === "string"
+      ) as BookMarkItem[];
+    } catch {
+      return [];
+    }
+  });
+
+  // ✅ save whenever items changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch {
+      // ignore storage errors (private mode, quota, etc.)
+    }
+  }, [items]);
 
   const addToBookMark = (game: BookMarkItem) => {
     setItems((prev) => {
@@ -59,12 +96,11 @@ export const BookMarkProvider = ({ children }: Props) => {
     </BookMarkContext.Provider>
   );
 };
+
 export const useBookMark = () => {
   const context = useContext(BookMarkContext);
-
   if (!context) {
     throw new Error("useBookMark must be used within a BookMarkProvider");
   }
-
   return context;
 };

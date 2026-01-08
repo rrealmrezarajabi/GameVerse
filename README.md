@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# GameVerse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple game discovery app built with React. Browse, search, and bookmark your favorite video games using the RAWG API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Game Listings**: Browse games with pagination
+- **Search**: Search for games with debounced input for better performance
+- **Genre Filtering**: Filter games by genre
+- **Sorting**: Sort games by various criteria
+- **Game Details**: View detailed information about each game including:
+  - Full description
+  - Ratings and Metacritic scores
+  - Available platforms
+  - Genres
+  - Developers and publishers
+  - Video trailers
+  - Screenshots
+- **Bookmarks**: Save your favorite games locally
+- **Responsive Design**: Works great on mobile and desktop
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Query (TanStack Query)
+- React Router
+- Axios
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+First, install the dependencies:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then run the development server:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+To build for production:
+
+```bash
+npm run build
+```
+
+To preview the production build:
+
+```bash
+npm run preview
+```
+
+## API Key
+
+This project uses the RAWG API. The current API key is hardcoded in `src/services/api.ts`. For personal use, you should get your own API key from [RAWG](https://rawg.io/apidocs) and replace it.
+
+## Project Structure
+
+```
+src/
+├── api/           # API calls
+├── components/    # Reusable components
+├── context/       # Context API for state management
+├── hooks/         # Custom hooks
+├── layout/        # Layout components
+├── pages/         # Main pages
+├── services/      # API services
+└── types/         # TypeScript type definitions
+```
+
+## Notes
+
+- Bookmarks are stored in localStorage
+- Search uses debouncing (1 second delay)
+- React Query handles caching and loading states
+- Dark theme design with Tailwind CSS
+
+## License
+
+This project is for personal use.
